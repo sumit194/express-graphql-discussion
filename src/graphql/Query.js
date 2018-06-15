@@ -5,15 +5,16 @@ import {
 } from 'graphql';
 
 import users from './types';
+import getUsers from '../Data/function';
 
 const findUser = {
   type: users,
   args: {
     id: { type: new GraphQLNonNull(GraphQLInt) },
   },
-  resolve: (_, { id }, { loaders }) => {
+  resolve: (_, { id }) => {
     try {
-      return loaders.person.load(id);
+      return getUsers(id);
     } catch (error) {
       throw new Error(error);
     }

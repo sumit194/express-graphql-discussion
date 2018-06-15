@@ -5,6 +5,7 @@ import {
   GraphQLNonNull,
   GraphQLInt,
 } from 'graphql';
+import getUsers from '../Data/function';
 
 const users = new GraphQLObjectType({
   name: 'users',
@@ -13,7 +14,7 @@ const users = new GraphQLObjectType({
     name: { type: new GraphQLNonNull(GraphQLString) },
     friends: {
       type: new GraphQLNonNull(GraphQLList(users)),
-      resolve: (user, args, { loaders }) => loaders.person.loadMany(user.friends),
+      resolve: user => user.friends.map(getUsers),
     },
   }),
 });
